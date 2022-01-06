@@ -22,7 +22,7 @@
           cancelled           TYPE sbook-cancelled,
           invoice_text(20)    TYPE c,
         END OF z_alv_flightinfo.
-        END OF z_alv_flightinfo.
+
  DATA:
    ls_sticket TYPE sticket,
    ls_sbook   TYPE sbook,
