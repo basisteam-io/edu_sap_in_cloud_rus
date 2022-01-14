@@ -1,4 +1,4 @@
 @EndUserText.label: 'Flight Reference'
-define service ZUI_FLR {
+define service ZUI_CDS_FLR {
   expose Z_CDS_FLR;
 }
