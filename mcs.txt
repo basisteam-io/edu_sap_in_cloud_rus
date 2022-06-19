@@ -1,0 +1,49 @@
+Проверим что у нас все пакет обновлены до последних версий для этого введём комманду
+sudo dnf upgrade --refresh
+dnf - это менеджер, который пришёл на смену yum в rpm-based операционных системах Linux, к которым и относится наша ОС Centos
+Данная комманда проверит, что у нас все пакеты обновлены до последних версий и при необходимости обновит их.
+
+Далее с помощью утилиты curl мы скачаем Docker и сразу же запустим скрипт установки.
+Сделаем это следующей коммандой
+sudo curl -fsSL https://get.docker.com/ | sh
+
+Мы видим, что Загрузка и установка прошли успешно
+Теперь нам нужно выдать права нашему пользователю centos
+Сделаем это следующей коммандой
+sudo usermod -aG docker sapedu
+
+Мы видим, что она отработала без ошибок
+И теперь нам нужно запустить наш Docker
+Сделаем это следующим образом systemct status и название сервиса, в нашем случае - это docker
+sudo systemctl start docker
+
+команда отработала без ошибок и теперь давайте посмотрим статус нашего Docker-а
+Cделаем это следующей коммандой
+sudo systemctl status docker
+
+Как мы видим сервис у нас в статусе active/running
+
+Давайте теперь залогинемся на сервис DockerHub и скачаем образ SAP NetWeaver Developer Edition
+И здесь нам понадобятся имя (username) и пароль, который мы получили на практическом занятии - регистрация в Docker Hub
+Давайте вспомним его, например, открыв KeePass, где мы его сохранили
+sudo docker login
+
+Скачиваем образ SAP NetWeaver командой
+sudo docker pull gorbenko1/abaplessons:latest
+
+проверим, что образ появился в доступных локально командой
+sudo docker images
+
+Запускаем SAP NetWeaver в нашем docker контейнере
+sudo docker run --stop-timeout 3600 -i --name a4h -h vhcala4hci -p 3200:3200 -p 3300:3300 -p 8443:8443 -p 30213:30213 -p 50000:50000 -p 50001:50001 store/saplabs/abaptrial:1909 -agree-to-sap-license -skip-limits-check
+
+Инициируем ещё одну ssh сессию в MobaXTerm и получим Hardware Key для нашего SAP NetWeaver ABAP AS
+сделаем это  командой
+sudo docker exec -it a4h /usr/local/bin/asabap_license_update
+
+Скопируем файл с лицензиями внутри docker-контейнера
+sudo docker cp /tmp/A4H_Multiple.txt a4h:/opt/sap/ASABAP_license
+
+Перечитаем новые лицензии
+sudo docker exec -it a4h /usr/local/bin/asabap_license_update
+
