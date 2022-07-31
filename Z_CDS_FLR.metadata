@@ -1,30 +1,23 @@
 @Metadata.layer: #CORE
-annotate view Z_CDS_FLR
+annotate view Z_CDS_STICKET_SBOOK
     with 
 {
-  @UI: {  lineItem:       [ { position: 10 } ],
-          identification: [ { position: 10 } ],
-          selectionField: [ { position: 10 } ]
-         
-          }
-@EndUserText.label: 'Номер заказа'
-Bookid;
 
   @UI: {  lineItem:       [ { position: 20 } ],
           identification: [ { position: 20 } ],
           selectionField: [ { position: 20 } ]
          
           }
-@EndUserText.label: 'Имя пассажира'
-Passname;
+@EndUserText.label: 'Авиакомпания'
+Carrname;
 
   @UI: {  lineItem:       [ { position: 30 } ],
           identification: [ { position: 30 } ],
           selectionField: [ { position: 30 } ]
          
           }
-@EndUserText.label: 'Класс в салоне'
-Class;
+@EndUserText.label: 'Маршрут'
+Route;
 
 
   @UI: {  lineItem:       [ { position: 40 } ],
@@ -32,12 +25,38 @@ Class;
           selectionField: [ { position: 40 } ]
          
           }
+@EndUserText.label: 'Дата вылета'
+Fldate;
+
+  @UI: {  lineItem:       [ { position: 10 } ],
+          identification: [ { position: 10 } ],
+          selectionField: [ { position: 10 } ]
+         
+          }
+@EndUserText.label: 'Имя пассажира'
+Passname;
+
+
+  @UI: {  lineItem:       [ { position: 60 } ],
+          identification: [ { position: 60 } ],
+          selectionField: [ { position: 60 } ]
+         
+          }
+@EndUserText.label: 'Класс в салоне'
+Class;
+
+
+  @UI: {  lineItem:       [ { position: 70 } ],
+          identification: [ { position: 70 } ],
+          selectionField: [ { position: 70 } ]
+         
+          }
 @EndUserText.label: 'Ручная кладь'
 Luggweight;
 
-  @UI: {  lineItem:       [ { position: 50 } ],
-          identification: [ { position: 50 } ],
-          selectionField: [ { position: 50 } ]
+  @UI: {  lineItem:       [ { position: 80 } ],
+          identification: [ { position: 80 } ],
+          selectionField: [ { position: 80 } ]
          
           }
 @EndUserText.label: 'Статус брони'
