@@ -49,7 +49,7 @@ docker run --stop-timeout 3600 --name a4h -h vhcala4hci  --sysctl kernel.shmmni=
 Пароль: ABAPtr2023#00
 Мандант (Client): 000
 
-После успешной авторизации зайти в транзакцию SLICENSE и скопировать Hardware ключ. Например, J1851296352
+После успешной авторизации зайти в транзакцию SLICENSE и скопировать Active Hardware key. Например, X0659851657
 
 На странице https://go.support.sap.com/minisap/#/minisap
 Заполнить форму. Указать Hardware ключ из транзакции SLICENSE
