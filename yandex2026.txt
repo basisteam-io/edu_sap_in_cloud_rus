@@ -1,0 +1,77 @@
+Проверим что у нас все пакет обновлены до последних версий для этого введём комманду
+sudo dnf upgrade --refresh
+dnf - это менеджер, который пришёл на смену yum в rpm-based операционных системах Linux, к которым и относится наша ОС Centos
+Данная коммнда проверит, что у нас все пакеты обновлены до последних версий и при необходимости обновит их.
+
+Далее с помощью утилиты curl мы скачаем Docker и сразу же запустим скрипт установки.
+Сделаем это следующей командой
+sudo curl -fsSL https://get.docker.com/ | sh
+
+Мы видим, что Загрузка и установка прошли успешно
+Теперь нам нужно выдать права нашему пользователю centos
+Сделаем это следующей командой
+sudo usermod -aG docker centos
+
+Мы видим, что она отработала без ошибок
+И теперь нам нужно запустить наш Docker
+Сделаем это следующим образом systemct status и название сервиса, в нашем случае - это docker
+sudo systemctl start docker
+
+команда отработала без ошибок и теперь давайте посмотрим статус нашего Docker-а
+Cделаем это следующей коммандой
+sudo systemctl status docker
+
+Как мы видим сервис у нас в статусе active/running
+
+Давайте теперь залогинемся на сервис DockerHub и скачаем образ SAP NetWeaver Developer Edition
+И здесь нам понадобятся имя (username) и пароль, который мы получили на практическом занятии - регистрация в Docker Hub
+Давайте вспомним его, например, открыв KeePass, где мы его сохранили
+sudo docker login
+
+Скачиваем образ SAP NetWeaver (ABAP Cloud Developer Trial 2023) командой
+sudo docker pull gorbenko1/abap-cloud-trial:2023
+
+проверим, что образ появился в доступных локально командой
+sudo docker images
+
+Запускаем SAP NetWeaver в нашем docker контейнере
+docker run --stop-timeout 3600 --name a4h -h vhcala4hci  --sysctl kernel.shmmni=32768 -p 3200:3200 -p 3300:3300 -p 8443:8443 -p 30213:30213 -p 50000:50000 -p 50001:50001 gorbenko1/abap-cloud-trial:2023 -skip-limits-check --agree-to-sap-license
+
+Подключение к  SAP NetWeaver (ABAP Cloud Developer Trial 2023)
+Параметры системного соединения в SAP Logon:
+Описание: SAP NW DEVELOPER EDITION
+Сервер приложений - Ваш внешний IP-адрес
+Номер инстанции - 00
+ИдСистемы - A4H
+
+Авторизация
+Пользователь: SAP*
+Пароль: ABAPtr2023#00
+Мандант (Client): 000
+
+После успешной авторизации зайти в транзакцию SLICENSE и скопировать Hardware ключ. Например, J1851296352
+
+На странице https://go.support.sap.com/minisap/#/minisap
+Заполнить форму. Указать Hardware ключ из транзакции SLICENSE
+Сгенерировать и сохранить файл - A4H_Multiple.txt
+
+В транзакции SLICENSE (Правой кнопкой мыши по Hardware Key. Выбрать Install)
+Импортировать сгенерированный файл - A4H_Multiple.txt 
+
+Выйти в SAP Logon из манданта (Client) 000.
+Повторно авторизоваться.
+
+Пользователь: DEVELOPER
+Пароль: ABAPtr2023#00
+Мандант (Client): 001
+При необходимости заменить пароль в транзакции SU01
+
+
+Дополнительные команды.
+
+Завершение работы
+sudo docker stop -t 7200 a4h
+
+Повторный запуск
+sudo docker start -ai a4h
+
